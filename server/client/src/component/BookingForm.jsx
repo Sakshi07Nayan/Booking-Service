@@ -11,7 +11,7 @@ function BookingForm() {
     appointmentDate: '',
     service: ''
   });
-  const [isSubmitting, setIsSubmitting] = useState(false); 
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
@@ -30,8 +30,8 @@ function BookingForm() {
     e.preventDefault();
     setErrorMessage('');
     setSuccessMessage('');
-    setIsSubmitting(true); 
-    
+    setIsSubmitting(true);
+
     const { name, email, appointmentDate, service } = formData;
 
     try {
@@ -43,29 +43,28 @@ function BookingForm() {
       });
 
       setSuccessMessage(`Appointment booked successfully for ${response.data.name} on ${response.data.date}!`);
-      setFormData({
-        name: '',
-        email: '',
-        appointmentDate: '',
-        service: ''
-      }); 
     } catch (error) {
       console.error('Error:', error);
+
+      // Handling different types of errors
       if (error.response) {
-        // If the error response exists, show the specific error message
+        // The request was made, and the server responded with a status code outside of the 2xx range
         setErrorMessage(error.response.data.error || 'Failed to book appointment. Please try again.');
+      } else if (error.request) {
+        // The request was made but no response was received (server might be down)
+        setErrorMessage('No response from the server. Please try again later.');
       } else {
-        // If there is no response, it's a network error
-        setErrorMessage('Server error. Please try again later.');
+        // Something went wrong while setting up the request
+        setErrorMessage('An unexpected error occurred. Please try again.');
       }
     } finally {
-      setIsSubmitting(false); 
+      setIsSubmitting(false);
     }
   };
 
   return (
     <div>
-      <button 
+      <button
         className="btn btn-danger sticky-button"
         onClick={openModal}
       >
@@ -88,9 +87,9 @@ function BookingForm() {
                 <form onSubmit={handleSubmit}>
                   <div className="mb-3">
                     <label className="form-label">Your Name</label>
-                    <input 
-                      type="text" 
-                      name="name" 
+                    <input
+                      type="text"
+                      name="name"
                       className="form-control"
                       value={formData.name}
                       onChange={handleChange}
@@ -99,9 +98,9 @@ function BookingForm() {
                   </div>
                   <div className="mb-3">
                     <label className="form-label">Your Email</label>
-                    <input 
-                      type="email" 
-                      name="email" 
+                    <input
+                      type="email"
+                      name="email"
                       className="form-control"
                       value={formData.email}
                       onChange={handleChange}
@@ -110,9 +109,9 @@ function BookingForm() {
                   </div>
                   <div className="mb-3">
                     <label className="form-label">Appointment Date</label>
-                    <input 
-                      type="date" 
-                      name="appointmentDate" 
+                    <input
+                      type="date"
+                      name="appointmentDate"
                       className="form-control"
                       value={formData.appointmentDate}
                       onChange={handleChange}
@@ -121,8 +120,8 @@ function BookingForm() {
                   </div>
                   <div className="mb-3">
                     <label className="form-label">Service</label>
-                    <select 
-                      name="service" 
+                    <select
+                      name="service"
                       className="form-select"
                       value={formData.service}
                       onChange={handleChange}
@@ -137,10 +136,10 @@ function BookingForm() {
                       {/* Add more services here */}
                     </select>
                   </div>
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     className="btn btn-primary"
-                    disabled={isSubmitting} 
+                    disabled={isSubmitting}
                   >
                     {isSubmitting ? 'Booking...' : 'Make an Appointment'}
                   </button>
