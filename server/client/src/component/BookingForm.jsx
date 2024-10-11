@@ -14,8 +14,8 @@ function BookingForm() {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
-  // const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-  // console.log("API Base URL:", API_BASE_URL);
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+  console.log("API Base URL:", API_BASE_URL);
 
   // Handle opening and closing modal
   const openModal = () => setIsOpen(true);
@@ -37,8 +37,8 @@ function BookingForm() {
     const { name, email, appointmentDate, service } = formData;
 
     try {
-      // const response = await fetch(`${API_BASE_URL}/api/appointments`, {
-      const response = await fetch('https://booking-service-hrn5.onrender.com/api/appointments', {
+      const response = await fetch(`${API_BASE_URL}/appointments`, {
+      // const response = await fetch('https://booking-service-hrn5.onrender.com/api/appointments', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -52,9 +52,10 @@ app.use(cors({ origin: '*' }));
 app.use(express.json());
 
 // Endpoint to book an appointment
-app.post('/api/appointments', async (req, res) => {
+app.post('/appointments', async (req, res) => {
   try {
     const { name, email, date, service } = req.body;
+    console.log('Received data:', { name, email, date, service }); 
     const query = 'INSERT INTO appointments (name, email, date, service) VALUES ($1, $2, $3, $4) RETURNING *';
     const values = [name, email, date, service];
     
@@ -66,7 +67,7 @@ app.post('/api/appointments', async (req, res) => {
   }
 });
 
-app.get('/api/get_booking', async (req, res) => {
+app.get('/get_booking', async (req, res) => {
     try {
       const query = 'SELECT * FROM appointments ORDER BY date DESC';
       const result = await pool.query(query);
