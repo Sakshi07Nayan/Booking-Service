@@ -1,0 +1,30 @@
+/* Change text color on hover for nav links */
+.nav-link:hover {
+  color: #ec780c !important; /* Customize the hover color */
+  
+}
+
+/* Change background and text color on hover for dropdown items */
+.dropdown-item:hover {
+  background-color: #f8f9fa !important; /* Customize background on hover */
+/* Customize text color on hover */
+}
+
+/* Hover effect for the logo */
+.navbar-brand:hover {
+  opacity: 0.8; /* Adds opacity effect on hover */
+}
+
+
+.sticky-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1050; /* Ensures the button stays above the backdrop */
+  padding: 10px 20px;
+  background-color: #dc3545; /* Bootstrap danger color */
+  color: white;
+  border-radius: 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
