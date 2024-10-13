@@ -19,32 +19,38 @@ const port = process.env.PORT || 5000;
 app.use(express.static(path.join(_dirname,'/client/build')));
 app.get('*',(req,res)=> res.sendFile(path.join(_dirname,'/client/build/index.html')))
 
-// Database connection using environment variables
+
 // const pool = new Pool({
-//     user: process.env.DB_USER,
-//     password: process.env.DB_PASSWORD,
-//     host: process.env.DB_HOST,
-//     port: process.env.DB_PORT || 5432,
-//     database: process.env.DB_NAME
+//   connectionString: process.env.DATABASE_URL,
+//   ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false, // SSL setting for production (like Heroku)
 // });
 
+// Test PostgreSQL connection
+// pool.connect((err, client, release) => {
+//   if (err) {
+//     return console.error('Error acquiring client', err.stack);
+//   }
+//   client.query('SELECT NOW()', (err, result) => {
+//     release();
+//     if (err) {
+//       return console.error('Error executing query', err.stack);
+//     }
+//     console.log('Connection test result:', result.rows);
+//   });
+// });
+
+//hosted database
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false, // SSL setting for production (like Heroku)
-});
+  connectionString: process.env.POSTGRES_URL,
+})
 
 // Test PostgreSQL connection
 pool.connect((err, client, release) => {
   if (err) {
-    return console.error('Error acquiring client', err.stack);
+    console.error('Error acquiring client', err.stack);
+    return;
   }
-  client.query('SELECT NOW()', (err, result) => {
-    release();
-    if (err) {
-      return console.error('Error executing query', err.stack);
-    }
-    console.log('Connection test result:', result.rows);
-  });
+  console.log('Database connected');
 });
 
 
